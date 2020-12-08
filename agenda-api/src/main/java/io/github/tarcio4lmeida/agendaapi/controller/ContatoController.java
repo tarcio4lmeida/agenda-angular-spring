@@ -59,7 +59,7 @@ public class ContatoController {
     }
 
     @PatchMapping("{id}/favorito")
-    public void favorite( @PathVariable Integer id ){
+    public void favorite( @PathVariable Integer id ){ // @PathVariable-> atualizacao parcial 
         Optional<Contato> contato = repository.findById(id);
         contato.ifPresent( c -> {
             boolean favorito = c.getFavorito() == Boolean.TRUE;
@@ -67,6 +67,7 @@ public class ContatoController {
             repository.save(c);
         });
     }
+    
     @PutMapping("{id}/foto")
     public byte[] addPhoto(@PathVariable Integer id,
                            @RequestParam("foto") Part arquivo){
