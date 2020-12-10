@@ -13,7 +13,7 @@ import { Contato } from './contato';
 export class ContatoComponent implements OnInit {
 
   formulario: FormGroup;
-
+  contatos : Contato[] =[];
   constructor(
     private service: ContatoService,
     private fb: FormBuilder,
