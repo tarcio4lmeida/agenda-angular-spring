@@ -13,7 +13,14 @@ import { Contato } from './contato';
 export class ContatoComponent implements OnInit {
 
   formulario: FormGroup;
-  contatos : Contato[] =[];
+  contatos : Contato[] = [];
+  colunas = ['id', 'nome', 'email', 'favorito']
+
+  totalElementos = 0;
+  pagina = 0;
+  tamanho = 5;
+  pageSizeOptions : number[] = [5];
+
   constructor(
     private service: ContatoService,
     private fb: FormBuilder,
@@ -22,7 +29,21 @@ export class ContatoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.montarFormulario();    
+    this.montarFormulario();
+    this.listarContatos();    
+  }
+  
+  listarContatos(){
+    this.service.list().subscribe(response => {
+      console.log('porra', response);
+      this.contatos = response.content;
+    })
+  }
+
+  favoritar(contato: Contato){
+    this.service.favourite(contato).subscribe(response => {
+      contato.favorito = !contato.favorito;
+    })
   }
 
   montarFormulario(){
@@ -31,7 +52,7 @@ export class ContatoComponent implements OnInit {
       email: ['', [Validators.required, Validators.email] ]
     })  
   }
-
+  
   submit(){
     const formValues = this.formulario.value;
     const contato: Contato = new Contato(formValues.nome, formValues.email);
