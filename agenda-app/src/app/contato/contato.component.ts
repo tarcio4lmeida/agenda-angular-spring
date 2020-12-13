@@ -85,6 +85,7 @@ export class ContatoComponent implements OnInit {
     const formValues = this.formulario.value;
     const contato: Contato = new Contato(formValues.nome, formValues.email);
     this.service.save(contato).subscribe( resposta => {
+     this.listarContatos();
       this.snackBar.open('O Contato foi adicionado!', 'Sucesso!', {
         duration: 2000
       })
