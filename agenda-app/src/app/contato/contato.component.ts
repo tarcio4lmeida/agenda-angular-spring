@@ -34,10 +34,11 @@ export class ContatoComponent implements OnInit {
     this.listarContatos();    
   }
   
-  listarContatos(){
-    this.service.list().subscribe(response => {
-      console.log('porra', response);
+  listarContatos( pagina = 0, tamanho = 5 ){
+    this.service.list(pagina, tamanho).subscribe(response => {
       this.contatos = response.content;
+      this.totalElementos = response.totalElements;
+      this.pagina = response.number;
     })
   }
 

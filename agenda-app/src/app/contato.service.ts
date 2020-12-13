@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../environments/environment'
 import { Contato } from './contato/contato'
 import { Observable } from 'rxjs';
+import { PaginaContato } from './contato/paginaContato';
 
 
 @Injectable({
@@ -21,8 +22,11 @@ export class ContatoService {
     return this.http.post<Contato>(this.url, contato);
   }
 
-  list() : Observable<Contato[]> {
-    return this.http.get<any>(this.url);
+  list(page, size) : Observable<PaginaContato> {
+    const params = new HttpParams()
+    .set('page', page)
+    .set('size', size)
+    return this.http.get<any>(`${this.url}?${params.toString()}`);
   }
 
   favourite(contato: Contato) : Observable<any> {

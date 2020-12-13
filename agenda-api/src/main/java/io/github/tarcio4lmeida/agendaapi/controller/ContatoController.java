@@ -48,7 +48,6 @@ public class ContatoController {
         repository.deleteById(id);
     }
     
-    
     @GetMapping
     public Page<Contato> list(
           @RequestParam(value = "page", defaultValue = "0")   Integer pagina,
@@ -58,7 +57,7 @@ public class ContatoController {
         PageRequest pageRequest = PageRequest.of(pagina, tamanhoPagina, sort);
         return repository.findAll(pageRequest);
     }
-
+    
     @PatchMapping("{id}/favorito")
     public void favorite( @PathVariable Integer id ){ // @PathVariable-> atualizacao parcial 
         Optional<Contato> contato = repository.findById(id);
