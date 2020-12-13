@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Contato } from './contato';
+import { ContatoDetalheComponent } from '../contato-detalhe/contato-detalhe.component';
 
 @Component({
   selector: 'app-contato',
@@ -14,7 +15,7 @@ export class ContatoComponent implements OnInit {
 
   formulario: FormGroup;
   contatos : Contato[] = [];
-  colunas = ['id', 'nome', 'email', 'favorito']
+  colunas = ['foto','id', 'nome', 'email', 'favorito']
 
   totalElementos = 0;
   pagina = 0;
@@ -43,6 +44,26 @@ export class ContatoComponent implements OnInit {
   favoritar(contato: Contato){
     this.service.favourite(contato).subscribe(response => {
       contato.favorito = !contato.favorito;
+    })
+  }
+
+  uploadFoto(event, contato){
+    const files = event.target.files;
+    if(files){
+      const foto = files[0];
+      const formData: FormData = new FormData();
+      formData.append("foto", foto);
+      this.service
+            .upload(contato, formData)
+            .subscribe(response => this.listarContatos());
+    }
+  }
+
+  visualizarContato(contato: Contato){
+    this.dialog.open( ContatoDetalheComponent, {
+      width: '400px',
+      height: '450px',
+      data: contato
     })
   }
 

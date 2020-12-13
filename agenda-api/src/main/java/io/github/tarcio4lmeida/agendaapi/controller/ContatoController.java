@@ -47,7 +47,8 @@ public class ContatoController {
     public void delete( @PathVariable Integer id ){
         repository.deleteById(id);
     }
-
+    
+    
     @GetMapping
     public Page<Contato> list(
           @RequestParam(value = "page", defaultValue = "0")   Integer pagina,
