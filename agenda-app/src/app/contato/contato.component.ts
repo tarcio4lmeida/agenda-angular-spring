@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Contato } from './contato';
 import { ContatoDetalheComponent } from '../contato-detalhe/contato-detalhe.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-contato',
@@ -68,6 +69,11 @@ export class ContatoComponent implements OnInit {
     })
   }
 
+  paginar(event: PageEvent){
+    this.pagina = event.pageIndex;
+    this.listarContatos(this.pagina, this.tamanho)
+  }
+  
   montarFormulario(){
     this.formulario = this.fb.group({
       nome: ['', Validators.required ],
